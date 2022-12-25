@@ -8,5 +8,7 @@ import de.butties.r2dbcdemo.domain.Aggregate;
 
 @Repository
 public interface AggregateRepository extends ReactiveCrudRepository<Aggregate, Integer> {
+
     public Flux<Aggregate> findByPeriod(Long period);
+
 }
