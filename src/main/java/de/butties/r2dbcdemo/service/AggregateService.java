@@ -14,12 +14,9 @@ public class AggregateService {
 
     private final TransactionRepository transactionRepository;
 
-    public Mono<Aggregate> upsertAggregate(Transaction transaction) {
+    public Mono<Transaction> processTransaction(Transaction transaction) {
     
-        return transactionRepository.save(transaction)
-            .map(t -> {
-                return new Aggregate();
-            });
+        return transactionRepository.save(transaction);
     }
 
 }

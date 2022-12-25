@@ -18,7 +18,7 @@ import de.butties.r2dbcdemo.service.AggregateService;
 
 @Slf4j
 @RestController
-@RequestMapping("/aggregates")
+@RequestMapping("/r2dbc-demo")
 @RequiredArgsConstructor
 public class RESTController {
 
@@ -26,22 +26,22 @@ public class RESTController {
     private final AggregateService aggregateService;
 
 
-    @GetMapping("")
+    @GetMapping("/aggregates")
     public Flux<Aggregate> getAllAggregates() {
         log.debug("GET getAllAggregates");
         return aggregateRepository.findAll();
     }
 
-    @GetMapping("/{period}")
+    @GetMapping("/aggregates/{period}")
     private Flux<Aggregate> getAggregateByPeriod(@PathVariable String period) {
         log.debug("GET getAggregateByPeriod {}", period);
         return aggregateRepository.findByPeriod(Long.parseLong(period));
     }
     
-    @PostMapping("/enter/transaction")
-    public Mono<Aggregate> upsertAggregate(@RequestBody Transaction transaction) {
-        log.debug("POST upsertAggregate {}", transaction);
-        return aggregateService.upsertAggregate(transaction);
+    @PostMapping("/transactions/enter")
+    public Mono<Transaction> processTransaction(@RequestBody Transaction transaction) {
+        log.debug("POST processTransaction {}", transaction);
+        return aggregateService.processTransaction(transaction);
     }
 
 }
