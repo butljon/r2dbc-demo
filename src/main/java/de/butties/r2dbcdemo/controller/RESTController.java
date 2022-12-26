@@ -38,7 +38,7 @@ public class RESTController {
         return aggregateRepository.findByPeriod(Long.parseLong(period));
     }
     
-    @PostMapping("/transactions/enter")
+    @PostMapping("/transactions/post")
     public Mono<Transaction> processTransaction(@RequestBody Transaction transaction) {
         log.debug("POST processTransaction {}", transaction);
         return aggregateService.processTransaction(transaction);

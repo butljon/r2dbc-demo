@@ -26,11 +26,13 @@ EPs exposed:
 
 - GET http://localhost:8080/r2dbc-demo/aggregates,
 - GET http://localhost:8080/r2dbc-demo/aggregates/{period},
-- POST http://localhost:8080/r2dbc-demo/transactions/enter,
+- POST http://localhost:8080/r2dbc-demo/transactions/post,
 
 latter accepting (JSON) payload such as,
 
 &nbsp;&nbsp;&nbsp;`{ "period": 0, "sequence": 0 }`
+
+Have a look at `src/main/resources/jmeter/r2dbc-demo_POST_transaction.jmx` for a sample Apache JMeter config. which can be run, e.g. `env JAVA_HOME=/usr/lib/jvm/java-11-openjdk-amd64 jmeter -n -t r2dbc-demo_POST_transaction.jmx -l results.csv` (`env JAVA_HOME=/usr/lib/jvm/java-11-openjdk-amd64 jmeter` in UI).
 
 Have fun!
 
