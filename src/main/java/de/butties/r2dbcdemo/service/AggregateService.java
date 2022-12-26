@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 
 import de.butties.r2dbcdemo.domain.Aggregate;
 import de.butties.r2dbcdemo.domain.Transaction;
+import de.butties.r2dbcdemo.repository.AggregateRepository;
 import de.butties.r2dbcdemo.repository.TransactionRepository;
 
 @Slf4j
@@ -15,6 +16,7 @@ import de.butties.r2dbcdemo.repository.TransactionRepository;
 public class AggregateService {
 
     private final TransactionRepository transactionRepository;
+    private final AggregateRepository aggregateRepository;
 
     public Mono<Transaction> processTransaction(Transaction transaction) {
 
@@ -25,7 +27,33 @@ public class AggregateService {
                 })
                 .switchIfEmpty(Mono.defer(() -> {
                     log.debug("Persisting not yet known transaction {}", transaction);
-                    return transactionRepository.save(transaction);
+                    return this.processNewTransaction(transaction);
+                }));
+
+    }
+
+    private Mono<Transaction> processNewTransaction(Transaction transaction) {
+
+        return transactionRepository.save(transaction)
+                .flatMap(t -> upsertAggregate(t))
+                .map(a -> {
+                    return transaction;
+                });
+
+    }
+
+    private Mono<Aggregate> upsertAggregate(Transaction transaction) {
+
+        return aggregateRepository.findByPeriod(transaction.getPeriod())
+                .flatMap(a -> {
+                    log.debug("Update aggregate {}", a);
+                    a.setCount(a.getCount() + 1);
+                    return aggregateRepository.save(a);
+                })
+                .switchIfEmpty(Mono.defer(() -> {
+                    log.debug("Creating new aggregate, period {}", transaction.getPeriod());
+                    return aggregateRepository.save(Aggregate.builder().period(transaction.getPeriod())
+                            .build());
                 }));
 
     }

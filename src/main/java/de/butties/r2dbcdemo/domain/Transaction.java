@@ -19,7 +19,6 @@ import java.time.Instant;
 public class Transaction {
 
     @Id
-    @NonNull
     @Column("t_id")
     private Long id;
 
@@ -31,7 +30,6 @@ public class Transaction {
     @Column("t_sequence")
     private Long sequence;
 
-    @NonNull
     @Column("t_created")
     private Instant created;
 

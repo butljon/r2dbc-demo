@@ -20,7 +20,6 @@ import java.time.Instant;
 public class Aggregate {
 
     @Id
-    @NonNull
     @Column("a_id")
     private Long id;
 
@@ -28,11 +27,9 @@ public class Aggregate {
     @Column("a_period")
     private Long period;
 
-    @NonNull
     @Column("a_count")
     private Long count;
 
-    @NonNull
     @Column("a_created")
     private Instant created;
 

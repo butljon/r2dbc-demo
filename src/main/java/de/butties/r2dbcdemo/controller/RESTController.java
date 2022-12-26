@@ -33,7 +33,7 @@ public class RESTController {
     }
 
     @GetMapping("/aggregates/{period}")
-    private Flux<Aggregate> getAggregateByPeriod(@PathVariable String period) {
+    private Mono<Aggregate> getAggregateByPeriod(@PathVariable String period) {
         log.debug("GET getAggregateByPeriod {}", period);
         return aggregateRepository.findByPeriod(Long.parseLong(period));
     }

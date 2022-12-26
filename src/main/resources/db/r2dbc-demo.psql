@@ -45,7 +45,7 @@ $func$
 BEGIN
    NEW.a_id := nextval('a_seq');
    NEW.a_created := now() at time zone ('utc');
-   NEW.a_count := 0;
+   NEW.a_count := 1;
    RETURN NEW;
 END
 $func$;
