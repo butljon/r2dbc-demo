@@ -1,0 +1,72 @@
+CREATE TABLE transaction (
+	t_id serial PRIMARY KEY not null,
+	t_period integer not null,
+	t_sequence integer not null,
+	t_created timestamp not null,
+	UNIQUE(t_period, t_sequence)
+);
+
+
+CREATE TABLE aggregate (
+	a_id serial PRIMARY KEY not null,
+	a_period integer not null,
+	a_count integer not null,
+	a_created timestamp not null,
+	a_updated timestamp,
+	UNIQUE(a_period)
+);
+
+
+create sequence t_seq;
+create sequence a_seq;
+
+
+CREATE or REPLACE FUNCTION tr_t_insert()
+  RETURNS trigger
+  LANGUAGE plpgsql AS
+$func$
+BEGIN
+   NEW.t_id := nextval('t_seq');
+   NEW.t_created := now() at time zone ('utc');
+   RETURN NEW;
+END
+$func$;
+
+CREATE TRIGGER tr_t_on_insert
+BEFORE INSERT ON transaction
+FOR EACH ROW
+EXECUTE FUNCTION tr_t_insert();
+
+
+CREATE or REPLACE FUNCTION tr_a_insert()
+  RETURNS trigger
+  LANGUAGE plpgsql AS
+$func$
+BEGIN
+   NEW.a_id := nextval('a_seq');
+   NEW.a_created := now() at time zone ('utc');
+   NEW.a_count := 1;
+   RETURN NEW;
+END
+$func$;
+
+CREATE TRIGGER tr_a_on_insert
+BEFORE INSERT ON aggregate
+FOR EACH ROW
+EXECUTE FUNCTION tr_a_insert();
+
+
+CREATE or REPLACE FUNCTION tr_a_update()
+  RETURNS trigger
+  LANGUAGE plpgsql AS
+$func$
+BEGIN
+   NEW.a_updated := now() at time zone ('utc');
+   RETURN NEW;
+END
+$func$;
+
+CREATE TRIGGER tr_a_on_update
+BEFORE UPDATE ON aggregate
+FOR EACH ROW
+EXECUTE FUNCTION tr_a_update();

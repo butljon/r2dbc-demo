@@ -1,0 +1,18 @@
+logging:
+  level:
+    org:
+      springframework:
+        r2dbc: DEBUG
+    de:
+      butties:
+        r2dbcdemo: DEBUG
+
+spring:
+  r2dbc:
+    url: r2dbc:postgresql://localhost:5432/r2dbc_demo
+    initialization-mode: always
+    pool:
+      enabled: true
+      initial-size: 1
+      max-size: 10
+      max-idle-time: 30m
