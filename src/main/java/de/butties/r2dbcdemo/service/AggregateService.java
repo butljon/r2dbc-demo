@@ -4,6 +4,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import reactor.core.publisher.Mono;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import de.butties.r2dbcdemo.domain.Aggregate;
 import de.butties.r2dbcdemo.domain.Transaction;
@@ -18,6 +19,7 @@ public class AggregateService {
     private final TransactionRepository transactionRepository;
     private final AggregateRepository aggregateRepository;
 
+    @Transactional
     public Mono<Transaction> processTransaction(Transaction transaction) {
 
         return transactionRepository.findByPeriodAndSequence(transaction.getPeriod(), transaction.getSequence())
