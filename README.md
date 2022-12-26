@@ -1,7 +1,7 @@
 # r2dbc-demo
 Spring R2DBC Prototype
 
-Implements against PLSQL R2DBC connector with `localhost` available DB service (see `src/main/resources/r2dbc-demo.psql` for schema requirements).
+Implements against PLSQL R2DBC connector with e.g. `localhost` available DB service (see `src/main/resources/r2dbc-demo.psql` for schema requirements).
 
 _Transactions_ can be inserted via REST POST with uniqueness criteria `(period, sequence)`. These will be accumulated into _aggregates_, the latter having uniqueness criteria `(period)`.
 
