@@ -1,11 +1,10 @@
 logging:
+  file:
+    name: /tmp/spring-logs/r2dbc-demo.log
+    max-size: 1GB
   level:
-    org:
-      springframework:
-        r2dbc: DEBUG
-    de:
-      butties:
-        r2dbcdemo: DEBUG
+    org.springframework.r2dbc: DEBUG
+    de.butties.r2dbcdemo: DEBUG
 
 spring:
   r2dbc:

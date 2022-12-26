@@ -49,7 +49,7 @@ public class AggregateService {
         return aggregateRepository.findByPeriod(transaction.getPeriod())
                 .flatMap(a -> {
                     log.debug("Update aggregate {}", a);
-                    a.setCount(a.getCount() + 1);
+                    a.increment();
                     return aggregateRepository.save(a);
                 })
                 .switchIfEmpty(Mono.defer(() -> {

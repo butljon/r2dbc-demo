@@ -10,9 +10,10 @@ CREATE TABLE transaction (
 CREATE TABLE aggregate (
 	a_id serial PRIMARY KEY not null,
 	a_period integer not null,
-	a_count integer not null,
+	a_count integer,
 	a_created timestamp not null,
 	a_updated timestamp,
+	a_version integer not null,
 	UNIQUE(a_period)
 );
 
@@ -70,3 +71,6 @@ CREATE TRIGGER tr_a_on_update
 BEFORE UPDATE ON aggregate
 FOR EACH ROW
 EXECUTE FUNCTION tr_a_update();
+
+-- consistency check:
+--   select * from (select t_period period, count(1) cnt from transaction group by t_period) a full outer join (select a_period period, a_count cnt from aggregate) b on a.period=b.period where a.cnt is null or b.cnt is null or a.cnt <> b.cnt;

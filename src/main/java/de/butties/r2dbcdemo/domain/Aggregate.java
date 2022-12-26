@@ -3,6 +3,7 @@ package de.butties.r2dbcdemo.domain;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.relational.core.mapping.Column;
 import org.springframework.data.relational.core.mapping.Table;
+import org.springframework.data.annotation.Version;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.AllArgsConstructor;
@@ -35,5 +36,13 @@ public class Aggregate {
 
     @Column("a_updated")
     private Instant updated;
+
+    @Version
+    @Column("a_version")
+    private Long version;
+
+    public void increment() {
+        count++;
+    }
 
 }

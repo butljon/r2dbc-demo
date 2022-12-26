@@ -14,7 +14,7 @@
 	<name>r2dbc-demo</name>
 	<description>Demo project for Spring Data R2DBC</description>
 	<properties>
-		<java.version>11</java.version>
+		<java.version>17</java.version>
 	</properties>
 	<dependencies>
 		<dependency>
