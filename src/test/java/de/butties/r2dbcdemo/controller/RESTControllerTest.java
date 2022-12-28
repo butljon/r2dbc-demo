@@ -103,7 +103,7 @@ class RESTControllerTest {
     @Test
     public void whenCheckAllAggregates_thenOK() {
 
-        log.debug("This is txnList {}", transactionList);
+        log.debug("This is current txnList {}", transactionList);
         List<Long> aggregatePeriods = transactionList
                 .stream()
                 .map(t -> t.getPeriod())
@@ -119,17 +119,6 @@ class RESTControllerTest {
                     .map(t -> t.getPeriod()+"#"+t.getSequence())
                     .distinct()
                     .count())));
-
-
-   /*     List<String> aggregateCounts = aggregatePeriods
-                .stream()
-                .map(a -> a.toString()+"#"+String.valueOf(transactionList
-                        .stream()
-                        .filter(t -> t.getPeriod().equals(a))
-                        .distinct()
-                        .count()
-                ))
-                .collect(Collectors.toList());*/
 
         Flux<Aggregate> aggregates = restController.getAggregates();
 
