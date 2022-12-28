@@ -32,7 +32,9 @@ latter accepting (JSON) payload such as,
 
 &nbsp;&nbsp;&nbsp;`{ "period": 0, "sequence": 0 }`
 
-Have a look at `src/main/resources/jmeter/r2dbc-demo_POST_transaction.jmx` for a sample Apache JMeter config. which can be run, e.g. `env JAVA_HOME=/usr/lib/jvm/java-11-openjdk-amd64 jmeter -n -t r2dbc-demo_POST_transaction.jmx -l results.csv` (`env JAVA_HOME=/usr/lib/jvm/java-11-openjdk-amd64 jmeter` in UI).
+Have a look at `src/main/resources/jmeter/r2dbc-demo_POST_transaction.jmx` for sample Apache JMeter test plan which can be run, e.g. `env JAVA_HOME=/usr/lib/jvm/java-11-openjdk-amd64 jmeter -n -t r2dbc-demo_POST_transaction.jmx -l results.csv` (`env JAVA_HOME=/usr/lib/jvm/java-11-openjdk-amd64 jmeter &` in UI).
+
+Rudimentary tests (using R2DBC H2 mem DB) can be run, e.g. `mvn clean test -Dspring.profiles.active=test`.
 
 Have fun!
 

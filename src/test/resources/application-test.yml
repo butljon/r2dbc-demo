@@ -1,0 +1,16 @@
+logging:
+  file:
+    name: /tmp/spring-logs/r2dbc-demo-test.log
+    max-size: 1GB
+  level:
+    org:
+        springframework.r2dbc: DEBUG
+        hibernate.SQL: DEBUG
+    de.butties.r2dbcdemo: DEBUG
+
+spring:
+  r2dbc:
+    url: r2dbc:h2:mem:///r2dbc_demo;DB_CLOSE_DELAY=-1;
+    username: sa
+    password:
+    initialization-mode: always

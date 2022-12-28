@@ -25,15 +25,14 @@ public class RESTController {
     private final AggregateRepository aggregateRepository;
     private final AggregateService aggregateService;
 
-
     @GetMapping("/aggregates")
-    public Flux<Aggregate> getAllAggregates() {
-        log.debug("GET getAllAggregates");
+    public Flux<Aggregate> getAggregates() {
+        log.debug("GET getAggregates");
         return aggregateRepository.findAll();
     }
 
     @GetMapping("/aggregates/{period}")
-    private Mono<Aggregate> getAggregateByPeriod(@PathVariable String period) {
+    public Mono<Aggregate> getAggregateByPeriod(@PathVariable String period) {
         log.debug("GET getAggregateByPeriod {}", period);
         return aggregateRepository.findByPeriod(Long.parseLong(period));
     }
