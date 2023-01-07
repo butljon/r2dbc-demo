@@ -20,7 +20,7 @@ and see how reactive R2DBC operations behave under concurrency.
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;`username:` user<br />
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;`password:` pass<br />
 
-(make sure not to forget _secrets_ as a Spring profile, e.g. `mvn spring-boot:run -Dspring-boot.run.profiles=secrets`)
+(make sure not to forget _secrets_ as a Spring profile, e.g. `mvn clean spring-boot:run -Dspring-boot.run.profiles=secrets`)
 
 EPs exposed:
 
