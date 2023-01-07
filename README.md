@@ -36,5 +36,6 @@ Have a look at `src/test/resources/jmeter/r2dbc-demo_POST_transaction.jmx` for s
 
 Rudimentary tests (using R2DBC H2 mem DB) can be run, e.g. `mvn clean test -Dspring.profiles.active=test`.
 
-Have fun!
+Prerequisites: Java 17, PostgreSQL server available somewhere.
 
+Have fun :)
