@@ -26,6 +26,7 @@ EPs exposed:
 
 - GET http://localhost:8080/r2dbc-demo/aggregates,
 - GET http://localhost:8080/r2dbc-demo/aggregates/{period},
+- DELETE http://localhost:8080/r2dbc-demo/aggregates/{period},
 - POST http://localhost:8080/r2dbc-demo/transactions/post,
 
 latter accepting (JSON) payload such as,
