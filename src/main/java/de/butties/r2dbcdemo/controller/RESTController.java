@@ -11,17 +11,14 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
-import java.util.Arrays;
-import java.util.ArrayList;
 import java.util.List;
-import java.util.Collections;
-import java.util.stream.Collectors;
-
 
 import de.butties.r2dbcdemo.domain.Aggregate;
 import de.butties.r2dbcdemo.domain.Transaction;
 import de.butties.r2dbcdemo.repository.AggregateRepository;
 import de.butties.r2dbcdemo.service.AggregateService;
+import de.butties.r2dbcdemo.service.PermutationService;
+import de.butties.r2dbcdemo.domain.PermutationRequest;
 
 @Slf4j
 @RestController
@@ -31,15 +28,10 @@ public class RESTController {
 
     private final AggregateRepository aggregateRepository;
     private final AggregateService aggregateService;
+    private final PermutationService permutationService;
 
     @GetMapping("/aggregates")
     public Flux<Aggregate> getAggregates() {
-
-        List<List<Integer>> result = subsets(new ArrayList<>(), Arrays.asList(0, 1, 2, 3, 5, 6, 4, 7), 3);
-        for(List<Integer> val : result) {
-            log.debug("GET getAggregates subsets {}", val);
-        }
-
         log.debug("GET getAggregates");
         return aggregateRepository.findAll();
     }
@@ -62,22 +54,10 @@ public class RESTController {
         return aggregateService.processTransaction(transaction);
     }
 
-    static List<List<Integer>> subsets(List<Integer> root, List<Integer> in, int m) {
-        if (m < 1) {
-            return Collections.singletonList(root);
-        }
-        return in.stream()
-                .flatMap(e -> subsets(add(root, e), remove(in, e), m-1).stream()).collect(Collectors.toList());
-    }
-
-    static List<Integer> add(List<Integer> in, Integer e) {
-        List<Integer> out = new ArrayList<>(in);
-        out.add(e);
-        return out;
-    }
-
-    static List<Integer> remove(List<Integer> in, Integer e) {
-        return in.stream().filter(l -> l >= e).collect(Collectors.toList());
+    @PostMapping("/calculations/permutations")
+    public Mono<List<List<Integer>>> processPermutation(@RequestBody PermutationRequest permuationRequest) {
+        log.debug("POST calculate permutations {}", permuationRequest);
+        return permutationService.calculatePermutation(permuationRequest);
     }
 
 }
